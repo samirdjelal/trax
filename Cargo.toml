@@ -13,10 +13,8 @@ authors = [
 	"Samir Djelal <ssdjelal@gmail.com>",
 ]
 exclude = [
-	"deployer-test.yml",
+	".idea/*",
 	".github/*",
-	"screenshot/*",
-	"examples/*",
 ]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
