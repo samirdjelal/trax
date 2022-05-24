@@ -16,13 +16,15 @@ exclude = [
 	".idea/*",
 	".github/*",
 ]
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.57"
+threadpool = "1.8.1"
+dotenv = "0.15.0"
+
+[dev-dependencies]
 
 [workspace]
 members = [
 	".",
 ]
-
-[dependencies]
-
-[dev-dependencies]
