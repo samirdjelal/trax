@@ -1,28 +1,22 @@
-use anyhow::Result;
-use dotenv::dotenv;
-use std::thread;
-use std::time::Duration;
-use threadpool::ThreadPool;
+mod config;
+mod gateway;
+mod worker;
 
-fn main() -> Result<()> {
+use anyhow::Result;
+use config::Config;
+use dotenv::dotenv;
+
+#[tokio::main]
+async fn main() -> Result<()> {
     dotenv().ok();
 
-    let pool = ThreadPool::new(4);
+	/// Handle http requests
+    let _ = crate::gateway::run();
 
-    let (sender, receiver) = std::sync::mpsc::channel();
+	/// Resolve error reports
+    let _ = crate::worker::run();
 
-    for _ in 0..4 {
-        let sender = sender.clone();
-        pool.execute(move || {
-            thread::sleep(Duration::from_secs(1));
-            sender.send("Hello from thread pool").unwrap();
-        });
-    }
-
-    loop {
-        let msg = receiver.recv().unwrap();
-        println!("{}", msg);
-    }
-
-    // Ok(())
+	/// Wait for handler and worker to finish
+	loop {}
+    Ok(())
 }
